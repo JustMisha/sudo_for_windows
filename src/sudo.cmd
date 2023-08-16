@@ -41,13 +41,13 @@ SHIFT
 
 :loop_to_form_command_line
     if "%~1" == "" goto end
-    rem If there are double quotes, double them again
-    rem Else add argument without quotes
-    if "%~1" == %1 (
-        set commandLine=%commandLine% ""%~1""
-    ) else (
-        set commandLine=%commandLine% %~1
-    )
+    rem If there are double quotes, double them again,
+    rem else add argument without quotes.
+    rem Don't use else with parentheses to avoid problems
+    rem with parentheses in variables.
+    if "%~1" == %1 set commandLine=%commandLine% ""%~1""
+    if "%~1" neq %1 set commandLine=%commandLine% %~1
+
     SHIFT
     goto loop_to_form_command_line
 :end
